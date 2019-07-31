@@ -13,7 +13,7 @@ See [Installation](https://github.com/sayem314/Caddy-Web-Server-Installer/wiki/I
 * CentOS - 6.8 and 7.2
 
 #### Example command to install with plugins:
-`caddy install http.cache,http.filemanager,http.ipfilter,http.ratelimit`
+`caddy install http.cache,http.ipfilter,http.ratelimit`
 
 See list of available commands [here.](https://github.com/sayem314/Caddy-Web-Server-Installer/wiki/Command-List)
 
