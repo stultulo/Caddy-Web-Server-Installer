@@ -532,7 +532,7 @@ caddyfile () {
 		fi
 
 		if [[ $domainmail == "off" ]]
-			echo -e "$domainname {
+			echo "$domainname {
 	root $caddywww
 	gzip
 	log $caddylog/access.log
@@ -540,7 +540,7 @@ caddyfile () {
 }
 " >> $caddyfile
 		else
-			echo -e "http://$domainmail:80 {
+			echo "http://$domainmail:80 {
 	redir https://$domainname:443{url}
 }
 https://$domainname:443 {
