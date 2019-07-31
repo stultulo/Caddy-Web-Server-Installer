@@ -521,6 +521,7 @@ caddyfile () {
 			echo "  SSL is disabled on non-production server."
 		else
 			echo "  Enter your email for automated ssl"
+			echo "  Type $(tput setaf 3)off$(tput sgr0) if you don't want https"
 			read -r -p "  Email: " domainmail
 			until [[ "$domainmail" == *@*.* || "$domainmail" == off ]]; do
 				echo ""
@@ -530,15 +531,28 @@ caddyfile () {
 			done
 		fi
 
-		echo "$domainname {
+		if [[ $domainmail == "off" ]]
+			echo -e "$domainname {
+	root $caddywww
+	gzip
+	log $caddylog/access.log
+	errors $caddylog/error.log$fastcgi_phpsock
+}
+" >> $caddyfile
+		else
+			echo -e "http://$domainmail:80 {
+	redir https://$domainname:443{url}
+}
+https://$domainname:443 {
 	root $caddywww
 	gzip
 	tls $domainmail
 	log $caddylog/access.log
 	errors $caddylog/error.log
-	fastcgi / $phpsock php
+	$fastcgi_phpsock
 }
-" >> $caddyfile
+"  >> $caddyfile
+		fi
 
 		echo ""
 		echo "  $caddyfile created"
