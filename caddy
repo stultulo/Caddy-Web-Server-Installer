@@ -539,7 +539,7 @@ caddyfile () {
 	errors $caddylog/error.log$fastcgi_phpsock
 }
 " >> $caddyfile
-		else
+		elif [[ ! $domainmail == "off" ]]
 			echo "http://$domainmail:80 {
 	redir https://$domainname:443{url}
 }
